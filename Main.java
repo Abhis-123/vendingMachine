@@ -1,6 +1,5 @@
 package com.Abhishek;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,11 +16,21 @@ public class Main {
 
         System.out.print("Enter name of your bucket :");
         bucket bucket= new bucket(scan.nextLine());
+
+        /************/
+        transaction t= new transaction();
+
+
+        /*********/
+
+
+
+
         boolean q=true;
         print_option();
         while (q){
-
-                    int option=scanInt();
+            System.out.print("choose an option ");
+            int option=scanInt();
             switch (option){
                 case 0:
                     print_option();
@@ -47,9 +56,6 @@ public class Main {
                     payBill(bucket,machine1);
                     break;
                 case 7:
-                    machine1.allowedCoin();
-                    break;
-                case 8:
                     q=false;
                     break;
             }
@@ -66,7 +72,7 @@ public class Main {
 
     private static void payBill(bucket bucket, vending machine1) {
         transaction transaction= new transaction();
-        Map<coins,Integer> paid= new HashMap<>(transaction.payMoney(machine1.getC()));
+        Map<coins,Integer> paid=transaction.payMoney(machine1.getC());
         transaction.perform_transaction(bucket,machine1,paid);
 
 
@@ -75,15 +81,15 @@ public class Main {
 
 
     private static void printBill(bucket bucket) {
-        System.out.print( String .format("|%-10s|%-6s|%-6s|%-7s ","name","price","quantity","sum"));
+        System.out.print( String .format("|%-10s|%-6s|%-6s|%-7s","name","price","quantity","sum"));
         for (Map.Entry<item, Integer> k: bucket.getItemList().entrySet()) {
             String s="\n------------------------------------------";
-            s=s+k.getKey().itemdetail()+"|"+k.getValue()+"       |"+k.getKey().getPrice()*k.getValue();
+            s=s+k.getKey().itemdetail()+"|"+k.getValue()+"|"+k.getKey().getPrice()*k.getValue();
             System.out.print(s);
 
         }
         System.out.println("\n------------------------------------------");
-        System.out.println("Total sum                  "+bucket.bill());
+        System.out.println("Total sum                    "+bucket.bill());
         System.out.println("------------------------------------------");
 
     }
@@ -93,7 +99,6 @@ public class Main {
         System.out.print("Enter item name:");
         String s= scan.next();
         if (bucket.containItem(s)){
-            System.out.print("enter number of "+s+" to be removed ");
             int amount=scanInt();
             item i= bucket.findItem(s);
             bucket.removeItem(i,amount);
@@ -111,18 +116,18 @@ public class Main {
 
 
         System.out.println("--------------------------------");
-        System.out.print("Enter item name:");
+        System.out.printf("Enter item name:");
         String s= scan.next();
         if (machine1.containItem(s)){
             System.out.print("enter amount of items..  ");
             int amount=scanInt();
-             item i= machine1.getProduct(s,amount);
-             if (i!=null) {
-                 bucket.addItem(i, amount);
-             }else {
-                 System.out.println("there is a problem.......");
+            item i= machine1.getProduct(s,amount);
+            if (i!=null) {
+                bucket.addItem(i, amount);
+            }else {
+                System.out.println("there is a problem.......");
 
-             }
+            }
 
         }else {
             System.out.println(" there is no such item in vending machine");
@@ -168,7 +173,7 @@ public class Main {
 
         return option;
 
-      }
+    }
 
 
 

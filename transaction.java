@@ -25,12 +25,12 @@ public class transaction {
         Map<coins, Integer> paid2 = new HashMap<>();
         Scanner scan= new Scanner(System.in);
         System.out.println("Enter number of coins according to order as mentioned");
-        for (Map.Entry<coins,Integer> cl:paid.entrySet()) {
+        for (coins cl:c) {
            boolean b= true;
            int ccount = 0;
            while (b) {
                try {
-                   System.out.print("Enter count of type  " + cl.getKey().getName() + " coins : ");
+                   System.out.print("Enter count of type  " + cl.getName() + " coins : ");
                     ccount= scan.nextInt();
                     scan.nextLine();
                     b=false;
@@ -41,17 +41,13 @@ public class transaction {
                    scan.nextLine();
                }
            }
-          //  paid.replace(cl.getKey(),ccount);
-           paid2.put(cl.getKey(),ccount);
-           System.out.println("number of "+cl.getKey().getName()+" type coin: "+paid2.get(cl.getKey()));
-           
+           paid2.put(cl,ccount);
         }
       
         return paid2;
     }
 
     public void perform_transaction(bucket b,vending v,Map<coins,Integer> paid){
-        System.out.println(paid.entrySet());
         double amount=0;
         System.out.println("amount calculating.....");
         for (Map.Entry<coins,Integer> k:paid.entrySet()) {
@@ -68,11 +64,9 @@ public class transaction {
         }else if (b.bill()<amount){
               amount=amount-b.bill();
             v.tryChange(paid,amount) ;
-
+            System.out.println(amount);
         }
         System.out.println("transaction completed......");
-
-
 
     }
 

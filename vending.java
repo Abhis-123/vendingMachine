@@ -28,11 +28,11 @@ public class vending {
          this.itemList.put(dew,50);
          this.itemList.put(s100pipers,50);
          this.itemList.put(teacher,50);
-         this.coinsList.put(oneR,0);
-         this.coinsList.put(twoR,0);
-         this.coinsList.put(tenR,0);
-         this.coinsList.put(hundred,0);
-         this.coinsList.put(fiveR,0);
+         this.coinsList.put(oneR,10);
+         this.coinsList.put(twoR,10);
+         this.coinsList.put(tenR,10);
+         this.coinsList.put(hundred,4);
+         this.coinsList.put(fiveR,15);
          this.c.add(oneR); this.c.add(twoR);  this.c.add(fiveR);this.c.add(tenR); this.c.add(hundred);
 
     }
@@ -48,7 +48,7 @@ public class vending {
     }
 
     public void  showItemList(){
-        System.out.print( String .format("|/-10s|/-6s|/-6s","name","price","quantity Available"));
+        System.out.print( String .format("|%-10s|%-6s|%-6s","name","price","quantity Available"));
       for (Map.Entry<item, Integer> k: itemList.entrySet()) {
             String s="\n------------------------------------------";
             s=s+k.getKey().itemdetail()+"|"+k.getValue();
@@ -123,23 +123,27 @@ public class vending {
 
     public void tryChange(Map<coins, Integer> paid, double amount) {
         boolean sucess=false;
-        coins oneR=new coins("one",1.00);
-        coins twoR=new coins("two",5.00);
-        coins fiveR=new coins("five",5.00);
-        coins tenR=new coins("ten",10.00);
-        coins hundred=new coins("hundred",100.00);
+            coins oneR=new coins("one",1.00);
+            coins twoR=new coins("two",5.00);
+            coins fiveR=new coins("five",5.00);
+            coins tenR=new coins("ten",10.00);
+            coins hundred=new coins("hundred",100.00);
+
+
 
             Map<coins,Integer> co= new HashMap<coins,Integer>(this.coinsList);
                  for (Map.Entry<coins,Integer> k:paid.entrySet() ) {
-                   //  co.get(k.getKey());
-                     System.out.println(k.getKey().getName()+"  "+paid.get(k.getKey()));
-                     co.replace(k.getKey(),co.get(k.getKey()) + paid.get(k.getKey()));
-                     System.out.println(k.getKey().getName()+"  "+co.get(k.getKey()) );
+
+                   //  System.out.println(k.getKey().getName()+"  "+paid.get(k.getKey()));
+                     co.replace(k.getKey(),co.get(k.getKey()),co.get(k.getKey()) + paid.get(k.getKey()));
+                  //   System.out.println(co.get(k.getKey())+"  "+co.get(k.getKey()) );
                  }
+
+
                int  amount1= (int)amount;
                  int i= amount1/100;
                  if (i<=co.get(hundred)){
-                     amount1=amount1-i*100;
+                      amount1=amount1-i*100;
                     int j=amount1/10;
                     if (j<=co.get(tenR)){
                         amount1=amount1-10*j;
@@ -148,15 +152,23 @@ public class vending {
                             amount1=amount1-5*k;
                             int l=amount1/2;
                             if (j<=co.get(twoR)){
-                                amount1=amount1-10*j;
+                                amount1=amount1-2*l;
                                 int m=amount1/1;
                                 if (m<=co.get(oneR)){
 
-                                  co.replace(oneR,co.get(oneR),co.get(oneR)-m)  ;
+                                    co.replace(oneR,co.get(oneR),co.get(oneR)-m)  ;
                                     co.replace(twoR,co.get(twoR),co.get(twoR)-l)  ;
                                     co.replace(fiveR,co.get(fiveR),co.get(fiveR)-k)  ;
                                     co.replace(tenR,co.get(tenR),co.get(tenR)-j)  ;
                                     co.replace(hundred,co.get(hundred),co.get(hundred)-i)  ;
+
+                                    System.out.println("collect your change....\n*************************");
+                                    System.out.println(i+" hundred rupee coin");
+                                    System.out.println(j+" ten rupee coin");
+                                    System.out.println(k+" five rupee coin");
+                                    System.out.println(l+" two rupee coin");
+                                    System.out.println(m+" one rupee coin");
+                                    System.out.println("***************************************************");
                                     sucess=true;
 
                                 }else {
@@ -181,15 +193,18 @@ public class vending {
                             amount1= (int) amount;
                             int l=amount1/2;
                             if (j<=co.get(twoR)){
-                                amount1=amount1-10*j;
+                                amount1=amount1-2*l;
                                 int m=amount1/1;
                                 if (m<=co.get(oneR)){
 
                                     co.replace(oneR,co.get(oneR),co.get(oneR)-m)  ;
                                     co.replace(twoR,co.get(twoR),co.get(twoR)-l)  ;
-                                    co.replace(fiveR,co.get(fiveR),co.get(fiveR)-k)  ;
-                                    co.replace(tenR,co.get(tenR),co.get(tenR)-j)  ;
-                                    co.replace(hundred,co.get(hundred),co.get(hundred)-i)  ;
+                                    System.out.println("collect your change....\n*************************");
+                                    System.out.println(l+" two rupee coin");
+                                    System.out.println(m+" one rupee coin");
+                                    System.out.println("***************************************************");
+
+
                                     sucess=true;
 
                                 }else {
@@ -222,15 +237,19 @@ public class vending {
                             amount1=amount1-5*k;
                             int l=amount1/2;
                             if (j<=co.get(twoR)){
-                                amount1=amount1-10*j;
+                                amount1=amount1-2*l;
                                 int m=amount1/1;
                                 if (m<=co.get(oneR)){
 
                                     co.replace(oneR,co.get(oneR),co.get(oneR)-m)  ;
                                     co.replace(twoR,co.get(twoR),co.get(twoR)-l)  ;
                                     co.replace(fiveR,co.get(fiveR),co.get(fiveR)-k)  ;
-                                    co.replace(tenR,co.get(tenR),co.get(tenR)-j)  ;
-                                    co.replace(hundred,co.get(hundred),co.get(hundred)-i)  ;
+                                    System.out.println("collect your change....\n*************************");
+                                    System.out.println(k+" five rupee coin");
+                                    System.out.println(l+" two rupee coin");
+                                    System.out.println(m+" one rupee coin");
+                                    System.out.println("***************************************************");
+
                                     sucess=true;
 
                                 }else {
@@ -255,15 +274,17 @@ public class vending {
                             amount1= (int) amount;
                             int l=amount1/2;
                             if (j<=co.get(twoR)){
-                                amount1=amount1-10*j;
+                                amount1=amount1-2*l;
                                 int m=amount1/1;
                                 if (m<=co.get(oneR)){
 
                                     co.replace(oneR,co.get(oneR),co.get(oneR)-m)  ;
                                     co.replace(twoR,co.get(twoR),co.get(twoR)-l)  ;
-                                    co.replace(fiveR,co.get(fiveR),co.get(fiveR)-k)  ;
-                                    co.replace(tenR,co.get(tenR),co.get(tenR)-j)  ;
-                                    co.replace(hundred,co.get(hundred),co.get(hundred)-i)  ;
+                                    System.out.println("collect your change....\n*************************");
+                                    System.out.println(l+" two rupee coin");
+                                    System.out.println(m+" one rupee coin");
+                                    System.out.println("***************************************************");
+
                                     sucess=true;
                                 }else {
                                     System.out.println("not sufficient 1 rupee coins...");
